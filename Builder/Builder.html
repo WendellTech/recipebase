@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Page Builder</title>
+    <link rel="stylesheet" href="Builder.css">
+</head>
+<body>
+    <div class="builder-container">
+        <h1>Recipe Page Builder</h1>
+        <form id="recipeForm">
+
+            <fieldset>
+                <legend>General Settings</legend>
+                <div><label for="pageHtmlLang">Page Language (e.g., 'es', 'en'):</label><input type="text" id="pageHtmlLang" value="es"></div>
+                <div><label for="pageTitle">Recipe Name (Main Title H1):</label><input type="text" id="pageTitle" value="Flan"></div>
+                <div><label for="imageName">Image Filename (e.g., flan.avif):</label><input type="text" id="imageName" value="flan.avif"></div>
+                <div><label for="timerLength">Default Timer Length (minutes):</label><input type="number" id="timerLength" value="45" min="1"></div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Color Scheme</legend>
+                <div><label for="primaryColor">Primary Color:</label><input type="color" id="primaryColor" value="#d38b2c"></div>
+                <div><label for="secondaryColor">Secondary Color:</label><input type="color" id="secondaryColor" value="#f5deb3"></div>
+                <div><label for="accentColor">Accent Color:</label><input type="color" id="accentColor" value="#8b4513"></div>
+                <div><label for="textColor">Text Color:</label><input type="color" id="textColor" value="#4a3520"></div>
+                <div><label for="backgroundColor">Background Color:</label><input type="color" id="backgroundColor" value="#fff9ee"></div>
+                <div><label for="cardBackgroundColor">Card Background Color:</label><input type="color" id="cardBackgroundColor" value="#fffaf0"></div>
+                <div><label for="shadowColor">Shadow Color (rgba format recommended):</label><input type="text" id="shadowColor" value="rgba(139, 69, 19, 0.15)"></div>
+            </fieldset>
+
+            <!-- Content Section -->
+            <h2>Content</h2>
+            <div><label for="defaultLangCode">Default Language Code (e.g., es, en):</label><input type="text" id="defaultLangCode" value="es" size="5"></div>
+
+            <fieldset>
+                <legend>Default Language Content</legend>
+                <div><label for="subtitleDefault">Subtitle:</label><input type="text" id="subtitleDefault" value="Un postre clásico español"></div>
+                <div><label for="imageOverlayTitleDefault">Image Overlay Title:</label><input type="text" id="imageOverlayTitleDefault" value="Flan Casero"></div>
+                <div><label for="ingredientsTitleDefault">"Ingredients" Heading:</label><input type="text" id="ingredientsTitleDefault" value="Ingredientes"></div>
+                <div id="ingredientsContainerDefault">
+                    <h4>Ingredients (one per line)</h4>
+                    <textarea id="ingredientsDefault" rows="6">4 huevos
+1 lata (397g) de leche condensada
+500 ml de leche entera
+1 cucharadita de esencia de vainilla
+1 taza de azúcar (para el caramelo)
+2 cucharadas de agua</textarea>
+                </div>
+                <div><label for="instructionsTitleDefault">"Instructions" Heading:</label><input type="text" id="instructionsTitleDefault" value="Instrucciones"></div>
+                <div id="instructionsContainerDefault">
+                    <h4>Instructions (one per line)</h4>
+                    <textarea id="instructionsDefault" rows="10">Precalienta el horno a 180°C.
+Para hacer el caramelo, pon el azúcar y el agua en una cacerola pequeña. Cocina a fuego medio, sin remover, hasta que se forme un caramelo dorado.
+Vierte el caramelo caliente en un molde para flan. Gira el molde para cubrir el fondo uniformemente. Deja que el caramelo se enfríe.
+En un tazón grande, bate los huevos. Añade la leche condensada, la leche entera y la vainilla. Mezcla bien.
+Cuela la mezcla y viértela en el molde con caramelo.
+Coloca el molde en un baño María (una bandeja más grande con agua caliente).
+Hornea por 45-50 minutos, o hasta que al insertar un cuchillo en el centro salga limpio.
+Retira del horno y deja enfriar a temperatura ambiente.
+Refrigera por al menos 4 horas o toda la noche.
+Para servir, pasa un cuchillo alrededor del borde del flan y voltéalo en un plato.</textarea>
+                </div>
+                <div><label><input type="checkbox" id="includeTip"> Include Tip?</label></div>
+                <div id="tipSectionDefault" style="display:none;">
+                    <div><label for="tipTitleDefault">Tip Title (e.g., "Consejo:")</label><input type="text" id="tipTitleDefault" value="Consejo:"></div>
+                    <div><label for="tipTextDefault">Tip Text:</label><textarea id="tipTextDefault" rows="3">El flan debe temblar ligeramente en el centro cuando está listo. ¡No lo cocines demasiado!</textarea></div>
+                </div>
+                 <div><label for="footerTextDefault">Footer Text:</label><input type="text" id="footerTextDefault" value="© 2025 Recetas - Creado para estudiantes"></div>
+            </fieldset>
+            
+            <hr>
+            <div><label><input type="checkbox" id="addTranslation"> Add Translation?</label></div>
+            
+            <div id="translationSection" style="display:none;">
+                <h2>Translation Content</h2>
+                <div><label for="altLangCode">Alternative Language Code (e.g., en, fr):</label><input type="text" id="altLangCode" value="en" size="5"></div>
+
+                <fieldset>
+                    <legend>Alternative Language Content</legend>
+                    <div><label for="subtitleAlt">Subtitle (Alt Lang):</label><input type="text" id="subtitleAlt" value="A classic Spanish dessert"></div>
+                    <div><label for="imageOverlayTitleAlt">Image Overlay Title (Alt Lang):</label><input type="text" id="imageOverlayTitleAlt" value="Homemade Flan"></div>
+                    <div><label for="ingredientsTitleAlt">"Ingredients" Heading (Alt Lang):</label><input type="text" id="ingredientsTitleAlt" value="Ingredients"></div>
+                     <div id="ingredientsContainerAlt">
+                        <h4>Ingredients (Alt Lang - one per line, match order above)</h4>
+                        <textarea id="ingredientsAlt" rows="6">4 eggs
+1 can (397g) of condensed milk
+500 ml of whole milk
+1 teaspoon of vanilla extract
+1 cup of sugar (for the caramel)
+2 tablespoons of water</textarea>
+                    </div>
+                    <div><label for="instructionsTitleAlt">"Instructions" Heading (Alt Lang):</label><input type="text" id="instructionsTitleAlt" value="Instructions"></div>
+                    <div id="instructionsContainerAlt">
+                        <h4>Instructions (Alt Lang - one per line, match order above)</h4>
+                        <textarea id="instructionsAlt" rows="10">Preheat the oven to 180°C.
+To make the caramel, put the sugar and water in a small saucepan. Cook over medium heat, without stirring, until a golden caramel forms.
+Pour the hot caramel into a flan mold. Rotate the mold to cover the bottom evenly. Let the caramel cool.
+In a large bowl, beat the eggs. Add the condensed milk, whole milk, and vanilla. Mix well.
+Strain the mixture and pour it into the mold with caramel.
+Place the mold in a water bath (a larger tray with hot water).
+Bake for 45-50 minutes, or until a knife inserted in the center comes out clean.
+Remove from the oven and let it cool at room temperature.
+Refrigerate for at least 4 hours or overnight.
+To serve, run a knife around the edge of the flan and flip it onto a plate.</textarea>
+                    </div>
+                    <div id="tipSectionAlt" style="display:none;"> <!-- Controlled by "includeTip" and "addTranslation" -->
+                        <div><label for="tipTitleAlt">Tip Title (Alt Lang - e.g., "Tip:")</label><input type="text" id="tipTitleAlt" value="Tip:"></div>
+                        <div><label for="tipTextAlt">Tip Text (Alt Lang):</label><textarea id="tipTextAlt" rows="3">The flan should jiggle slightly in the center when it's ready. Don't overcook it!</textarea></div>
+                    </div>
+                    <div><label for="footerTextAlt">Footer Text (Alt Lang):</label><input type="text" id="footerTextAlt" value="© 2025 Recipes - Created for students"></div>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Button & UI Text Translations</legend>
+                    <p><strong>Hint for "Translate" button:</strong> Enter the text that invites user to switch to the *other* language.</p>
+                    
+                    <h4>Default Language UI Texts</h4>
+                    <div><label for="translateButtonDefault">"Translate" Button (when in Default Lang):</label><input type="text" id="translateButtonDefault" value="Translate"></div>
+                    <div><label for="startTimerDefault">"Start Timer {X} min" Button:</label><input type="text" id="startTimerDefault" value="Iniciar Temporizador {X} min"> <small>({X} is placeholder for duration)</small></div>
+                    <div><label for="pauseDefault">"Pause" Button:</label><input type="text" id="pauseDefault" value="Pausar"></div>
+                    <div><label for="resumeDefault">"Resume" Button:</label><input type="text" id="resumeDefault" value="Reanudar"></div>
+                    <div><label for="resetDefault">"Reset" Button:</label><input type="text" id="resetDefault" value="Reiniciar"></div>
+                    <div><label for="hideTimerDefault">"Hide Timer" Button:</label><input type="text" id="hideTimerDefault" value="Ocultar Temporizador"></div>
+                    <div><label for="showTimerDefault">"Show Timer" Button:</label><input type="text" id="showTimerDefault" value="Mostrar Temporizador"></div>
+                    <div><label for="timerHeadingDefault">"Timer" Heading (in timer box):</label><input type="text" id="timerHeadingDefault" value="Temporizador"></div>
+                    <div><label for="timeCompletedDefault">"Time Completed!" Alert:</label><input type="text" id="timeCompletedDefault" value="¡Tiempo completado!"></div>
+
+                    <h4>Alternative Language UI Texts</h4>
+                    <div><label for="translateButtonAlt">"Translate" Button (when in Alt Lang):</label><input type="text" id="translateButtonAlt" value="Traducir"></div>
+                    <div><label for="startTimerAlt">"Start Timer {X} min" Button (Alt Lang):</label><input type="text" id="startTimerAlt" value="Start Timer {X} min"></div>
+                    <div><label for="pauseAlt">"Pause" Button (Alt Lang):</label><input type="text" id="pauseAlt" value="Pause"></div>
+                    <div><label for="resumeAlt">"Resume" Button (Alt Lang):</label><input type="text" id="resumeAlt" value="Resume"></div>
+                    <div><label for="resetAlt">"Reset" Button (Alt Lang):</label><input type="text" id="resetAlt" value="Reset"></div>
+                    <div><label for="hideTimerAlt">"Hide Timer" Button (Alt Lang):</label><input type="text" id="hideTimerAlt" value="Hide Timer"></div>
+                    <div><label for="showTimerAlt">"Show Timer" Button (Alt Lang):</label><input type="text" id="showTimerAlt" value="Show Timer"></div>
+                    <div><label for="timerHeadingAlt">"Timer" Heading (Alt Lang):</label><input type="text" id="timerHeadingAlt" value="Timer"></div>
+                    <div><label for="timeCompletedAlt">"Time Completed!" Alert (Alt Lang):</label><input type="text" id="timeCompletedAlt" value="Time completed!"></div>
+                </fieldset>
+            </div>
+
+            <button type="button" id="generateButton">Generate Recipe HTML</button>
+            <button type="button" id="downloadButton" style="display:none;">Download HTML</button>
+        </form>
+
+        <div id="outputContainer" style="display:none;">
+            <h3>Generated HTML:</h3>
+            <textarea id="outputHtml" rows="30" cols="120" readonly></textarea>
+        </div>
+    </div>
+    <script src="Builder.js"></script>
+</body>
+</html>

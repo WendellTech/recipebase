@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Receta de Flan</title>
+    <style>
+        :root {
+            --primary-color: #d38b2c;
+            --secondary-color: #f5deb3;
+            --accent-color: #8b4513;
+            --text-color: #4a3520;
+            --background-color: #fff9ee;
+            --card-background: #fffaf0;
+            --shadow-color: rgba(139, 69, 19, 0.15);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        /* Custom Scrollbar */
+        /* For Webkit browsers */
+        body::-webkit-scrollbar {
+            width: 12px;
+        }
+        body::-webkit-scrollbar-track {
+            background: var(--secondary-color);
+        }
+        body::-webkit-scrollbar-thumb {
+            background-color: var(--primary-color);
+            border-radius: 10px;
+            border: 3px solid var(--secondary-color);
+        }
+        body::-webkit-scrollbar-thumb:hover {
+            background-color: var(--accent-color);
+        }
+        /* For Firefox */
+        html { /* Apply to html for Firefox full page scrollbar */
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary-color) var(--secondary-color);
+        }
+
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 30px 0;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            color: var(--accent-color);
+            margin-bottom: 10px;
+            font-family: 'Georgia', serif;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .subtitle {
+            font-size: 1.3rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        .language-switch {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background-color 0.3s, transform 0.2s;
+            box-shadow: 0 2px 5px var(--shadow-color);
+        }
+
+        .language-switch:hover {
+            background-color: #a05a17;
+            transform: translateY(-2px);
+        }
+
+        .recipe-image-container {
+            position: relative;
+            margin-bottom: 40px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px var(--shadow-color);
+        }
+
+        .recipe-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .recipe-image-container:hover .recipe-image {
+            transform: scale(1.03);
+        }
+
+        .recipe-image-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+            padding: 20px;
+            color: white;
+        }
+
+        .recipe-image-overlay h2 {
+            margin: 0;
+            font-size: 1.8rem;
+            border: none;
+            color: white;
+        }
+
+        .recipe-card {
+            background-color: var(--card-background);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 20px var(--shadow-color);
+            transition: transform 0.3s;
+            border-left: 5px solid var(--primary-color);
+        }
+
+        .recipe-card:hover {
+            transform: translateY(-5px);
+        }
+
+        h2 {
+            color: var(--accent-color);
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 10px;
+            margin-top: 0;
+            font-family: 'Georgia', serif;
+        }
+
+        .ingredients-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .ingredients-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid var(--secondary-color);
+            display: flex;
+            align-items: center;
+        }
+
+        .ingredients-list li:before {
+            content: "•";
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            margin-right: 10px;
+        }
+
+        .instructions-list {
+            list-style-type: none; /* Ensure no default numbers */
+            padding-left: 0; /* Remove default ol padding */
+            counter-reset: step-counter;
+        }
+
+        .instructions-list li {
+            margin-bottom: 20px;
+            position: relative;
+            padding-left: 45px; /* Space for the custom counter */
+        }
+
+        .instructions-list li::before {
+            content: counter(step-counter);
+            counter-increment: step-counter;
+            position: absolute;
+            left: 0;
+            top: 0;
+            background-color: var(--primary-color);
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .tip {
+            background-color: rgba(211, 139, 44, 0.1);
+            border-left: 4px solid var(--primary-color);
+            padding: 15px 20px;
+            margin: 30px 0;
+            border-radius: 8px;
+        }
+
+        .tip strong {
+            color: var(--accent-color);
+            font-size: 1.1rem;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px; /* Adjusted gap for more buttons */
+            margin-top: 30px;
+            flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
+        }
+
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px; /* Slightly smaller padding for more buttons */
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 0.9rem; /* Slightly smaller font */
+            transition: background-color 0.3s, transform 0.2s;
+            box-shadow: 0 4px 10px var(--shadow-color);
+        }
+
+        button:hover {
+            background-color: var(--accent-color);
+            transform: translateY(-3px);
+        }
+
+        .timer-container {
+            display: none; /* Initially hidden, controlled by JS */
+            text-align: center;
+            margin: 30px 0;
+            padding: 25px;
+            background-color: var(--card-background);
+            border-radius: 12px;
+            box-shadow: 0 8px 20px var(--shadow-color);
+            position: relative;
+        }
+
+        .timer-container::after {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 3px;
+            bottom: 0;
+            left: 0;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            border-radius: 0 0 8px 8px;
+        }
+
+        #timer {
+            font-size: 3rem;
+            color: var(--accent-color);
+            margin: 15px 0;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            padding: 30px;
+            color: var(--primary-color);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--secondary-color);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Flan</h1>
+            <div class="subtitle">Un postre clásico español</div>
+            <button class="language-switch" onclick="toggleLanguage()">Translate</button>
+        </header>
+
+        <div class="recipe-image-container">
+            <img src="flan.avif" alt="Flan casero" class="recipe-image" />
+            <div class="recipe-image-overlay">
+                <h2>Flan Casero</h2>
+            </div>
+        </div>
+
+        <div class="recipe-card">
+            <h2 id="ingredients-title">Ingredientes</h2>
+            <ul class="ingredients-list">
+                <li id="ing1">4 huevos</li>
+                <li id="ing2">1 lata (397g) de leche condensada</li>
+                <li id="ing3">500 ml de leche entera</li>
+                <li id="ing4">1 cucharadita de esencia de vainilla</li>
+                <li id="ing5">1 taza de azúcar (para el caramelo)</li>
+                <li id="ing6">2 cucharadas de agua</li>
+            </ul>
+        </div>
+
+        <div class="recipe-card">
+            <h2 id="instructions-title">Instrucciones</h2>
+            <ol class="instructions-list">
+                <li id="step1">Precalienta el horno a 180°C.</li>
+                <li id="step2">Para hacer el caramelo, pon el azúcar y el agua en una cacerola pequeña. Cocina a fuego medio, sin remover, hasta que se forme un caramelo dorado.</li>
+                <li id="step3">Vierte el caramelo caliente en un molde para flan. Gira el molde para cubrir el fondo uniformemente. Deja que el caramelo se enfríe.</li>
+                <li id="step4">En un tazón grande, bate los huevos. Añade la leche condensada, la leche entera y la vainilla. Mezcla bien.</li>
+                <li id="step5">Cuela la mezcla y viértela en el molde con caramelo.</li>
+                <li id="step6">Coloca el molde en un baño María (una bandeja más grande con agua caliente).</li>
+                <li id="step7">Hornea por 45-50 minutos, o hasta que al insertar un cuchillo en el centro salga limpio.</li>
+                <li id="step8">Retira del horno y deja enfriar a temperatura ambiente.</li>
+                <li id="step9">Refrigera por al menos 4 horas o toda la noche.</li>
+                <li id="step10">Para servir, pasa un cuchillo alrededor del borde del flan y voltéalo en un plato.</li>
+            </ol>
+        </div>
+
+        <div class="tip">
+            <strong id="tip-title">Consejo:</strong>
+            <p id="tip-text">El flan debe temblar ligeramente en el centro cuando está listo. ¡No lo cocines demasiado!</p>
+        </div>
+
+        <div class="buttons">
+            <button id="timer-button">Iniciar Temporizador 45 min</button>
+            <button id="pause-timer-button" style="display: none;">Pausar</button>
+            <button id="resume-timer-button" style="display: none;">Reanudar</button>
+            <button id="reset-timer-button" style="display: none;">Reiniciar</button>
+            <button id="hide-show-timer-button" style="display: none;">Ocultar Temporizador</button>
+        </div>
+
+        <div class="timer-container" id="timerContainer">
+            <h3 id="timer-heading">Temporizador</h3>
+            <div id="timer">45:00</div>
+        </div>
+
+        <footer id="footer-text">
+            © 2025 Recetas Españolas - Creado para estudiantes de español
+        </footer>
+    </div>
+
+    <script>
+        let timerInterval = null;
+        let totalSeconds = 0;
+        let initialDurationMinutes = 0;
+        let isPaused = false;
+        let isTimerVisible = false; 
+        let language = 'es'; // Default language is Spanish
+
+        // DOM Elements
+        let timerContainerEl, timerDisplayEl, timerButtonEl, pauseBtn, resumeBtn, resetBtn, hideShowBtn,
+            languageSwitchBtn, subtitleEl, recipeImageOverlayH2El, ingredientsTitleEl, ing1El, ing2El,
+            ing3El, ing4El, ing5El, ing6El, instructionsTitleEl, step1El, step2El, step3El, step4El,
+            step5El, step6El, step7El, step8El, step9El, step10El, tipTitleEl, tipTextEl,
+            timerHeadingEl, footerTextEl;
+
+        const translations = {
+            'es': {
+                'TranslateButtonText': 'Translate', // Text for the language switch button itself
+                'Un postre clásico español': 'Un postre clásico español',
+                'Flan Casero': 'Flan Casero',
+                'Ingredientes': 'Ingredientes',
+                '4 huevos': '4 huevos',
+                '1 lata (397g) de leche condensada': '1 lata (397g) de leche condensada',
+                '500 ml de leche entera': '500 ml de leche entera',
+                '1 cucharadita de esencia de vainilla': '1 cucharadita de esencia de vainilla',
+                '1 taza de azúcar (para el caramelo)': '1 taza de azúcar (para el caramelo)',
+                '2 cucharadas de agua': '2 cucharadas de agua',
+                'Instrucciones': 'Instrucciones',
+                'Precalienta el horno a 180°C.': 'Precalienta el horno a 180°C.',
+                'Para hacer el caramelo, pon el azúcar y el agua en una cacerola pequeña. Cocina a fuego medio, sin remover, hasta que se forme un caramelo dorado.': 'Para hacer el caramelo, pon el azúcar y el agua en una cacerola pequeña. Cocina a fuego medio, sin remover, hasta que se forme un caramelo dorado.',
+                'Vierte el caramelo caliente en un molde para flan. Gira el molde para cubrir el fondo uniformemente. Deja que el caramelo se enfríe.': 'Vierte el caramelo caliente en un molde para flan. Gira el molde para cubrir el fondo uniformemente. Deja que el caramelo se enfríe.',
+                'En un tazón grande, bate los huevos. Añade la leche condensada, la leche entera y la vainilla. Mezcla bien.': 'En un tazón grande, bate los huevos. Añade la leche condensada, la leche entera y la vainilla. Mezcla bien.',
+                'Cuela la mezcla y viértela en el molde con caramelo.': 'Cuela la mezcla y viértela en el molde con caramelo.',
+                'Coloca el molde en un baño María (una bandeja más grande con agua caliente).': 'Coloca el molde en un baño María (una bandeja más grande con agua caliente).',
+                'Hornea por 45-50 minutos, o hasta que al insertar un cuchillo en el centro salga limpio.': 'Hornea por 45-50 minutos, o hasta que al insertar un cuchillo en el centro salga limpio.',
+                'Retira del horno y deja enfriar a temperatura ambiente.': 'Retira del horno y deja enfriar a temperatura ambiente.',
+                'Refrigera por al menos 4 horas o toda la noche.': 'Refrigera por al menos 4 horas o toda la noche.',
+                'Para servir, pasa un cuchillo alrededor del borde del flan y voltéalo en un plato.': 'Para servir, pasa un cuchillo alrededor del borde del flan y voltéalo en un plato.',
+                'Consejo:': 'Consejo:',
+                'El flan debe temblar ligeramente en el centro cuando está listo. ¡No lo cocines demasiado!': 'El flan debe temblar ligeramente en el centro cuando está listo. ¡No lo cocines demasiado!',
+                'Iniciar Temporizador 45 min': 'Iniciar Temporizador 45 min',
+                'Pausar': 'Pausar',
+                'Reanudar': 'Reanudar',
+                'Reiniciar': 'Reiniciar',
+                'Ocultar Temporizador': 'Ocultar Temporizador',
+                'Mostrar Temporizador': 'Mostrar Temporizador',
+                'Temporizador': 'Temporizador',
+                '¡Tiempo completado!': '¡Tiempo completado!',
+                '© 2025 Recetas Españolas - Creado para estudiantes de español': '© 2025 Recetas Españolas - Creado para estudiantes de español'
+            },
+            'en': {
+                'TranslateButtonText': 'Traducir',
+                'Un postre clásico español': 'A classic Spanish dessert',
+                'Flan Casero': 'Homemade Flan',
+                'Ingredientes': 'Ingredients',
+                '4 huevos': '4 eggs',
+                '1 lata (397g) de leche condensada': '1 can (397g) of condensed milk',
+                '500 ml de leche entera': '500 ml of whole milk',
+                '1 cucharadita de esencia de vainilla': '1 teaspoon of vanilla extract',
+                '1 taza de azúcar (para el caramelo)': '1 cup of sugar (for the caramel)',
+                '2 cucharadas de agua': '2 tablespoons of water',
+                'Instrucciones': 'Instructions',
+                'Precalienta el horno a 180°C.': 'Preheat the oven to 180°C.',
+                'Para hacer el caramelo, pon el azúcar y el agua en una cacerola pequeña. Cocina a fuego medio, sin remover, hasta que se forme un caramelo dorado.': 'To make the caramel, put the sugar and water in a small saucepan. Cook over medium heat, without stirring, until a golden caramel forms.',
+                'Vierte el caramelo caliente en un molde para flan. Gira el molde para cubrir el fondo uniformemente. Deja que el caramelo se enfríe.': 'Pour the hot caramel into a flan mold. Rotate the mold to cover the bottom evenly. Let the caramel cool.',
+                'En un tazón grande, bate los huevos. Añade la leche condensada, la leche entera y la vainilla. Mezcla bien.': 'In a large bowl, beat the eggs. Add the condensed milk, whole milk, and vanilla. Mix well.',
+                'Cuela la mezcla y viértela en el molde con caramelo.': 'Strain the mixture and pour it into the mold with caramel.',
+                'Coloca el molde en un baño María (una bandeja más grande con agua caliente).': 'Place the mold in a water bath (a larger tray with hot water).',
+                'Hornea por 45-50 minutos, o hasta que al insertar un cuchillo en el centro salga limpio.': 'Bake for 45-50 minutes, or until a knife inserted in the center comes out clean.',
+                'Retira del horno y deja enfriar a temperatura ambiente.': 'Remove from the oven and let it cool at room temperature.',
+                'Refrigera por al menos 4 horas o toda la noche.': 'Refrigerate for at least 4 hours or overnight.',
+                'Para servir, pasa un cuchillo alrededor del borde del flan y voltéalo en un plato.': 'To serve, run a knife around the edge of the flan and flip it onto a plate.',
+                'Consejo:': 'Tip:',
+                'El flan debe temblar ligeramente en el centro cuando está listo. ¡No lo cocines demasiado!': 'The flan should jiggle slightly in the center when it\'s ready. Don\'t overcook it!',
+                'Iniciar Temporizador 45 min': 'Start 45 min Timer',
+                'Pausar': 'Pause',
+                'Reanudar': 'Resume',
+                'Reiniciar': 'Reset',
+                'Ocultar Temporizador': 'Hide Timer',
+                'Mostrar Temporizador': 'Show Timer',
+                'Temporizador': 'Timer',
+                '¡Tiempo completado!': 'Time completed!',
+                '© 2025 Recetas Españolas - Creado para estudiantes de español': '© 2025 Spanish Recipes - Created for Spanish students'
+            }
+        };
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            cacheDOMElementsAndSetup();
+            updateButtonVisibility(); // Set initial button states
+            updateAllText(); // Apply initial language
+        });
+
+        function cacheDOMElementsAndSetup() {
+            // General page elements for translation
+            languageSwitchBtn = document.querySelector('.language-switch');
+            subtitleEl = document.querySelector('.subtitle');
+            recipeImageOverlayH2El = document.querySelector('.recipe-image-overlay h2');
+            ingredientsTitleEl = document.getElementById('ingredients-title');
+            ing1El = document.getElementById('ing1');
+            ing2El = document.getElementById('ing2');
+            ing3El = document.getElementById('ing3');
+            ing4El = document.getElementById('ing4');
+            ing5El = document.getElementById('ing5');
+            ing6El = document.getElementById('ing6');
+            instructionsTitleEl = document.getElementById('instructions-title');
+            step1El = document.getElementById('step1');
+            step2El = document.getElementById('step2');
+            step3El = document.getElementById('step3');
+            step4El = document.getElementById('step4');
+            step5El = document.getElementById('step5');
+            step6El = document.getElementById('step6');
+            step7El = document.getElementById('step7');
+            step8El = document.getElementById('step8');
+            step9El = document.getElementById('step9');
+            step10El = document.getElementById('step10');
+            tipTitleEl = document.getElementById('tip-title');
+            tipTextEl = document.getElementById('tip-text');
+            footerTextEl = document.getElementById('footer-text');
+
+            // Timer specific elements
+            timerContainerEl = document.getElementById('timerContainer');
+            timerDisplayEl = document.getElementById('timer');
+            timerHeadingEl = document.getElementById('timer-heading');
+
+            // Timer control buttons
+            timerButtonEl = document.getElementById('timer-button');
+            pauseBtn = document.getElementById('pause-timer-button');
+            resumeBtn = document.getElementById('resume-timer-button');
+            resetBtn = document.getElementById('reset-timer-button');
+            hideShowBtn = document.getElementById('hide-show-timer-button');
+
+            // Assign onclick handlers
+            timerButtonEl.onclick = () => startTimer(45); // Default 45 minutes
+            pauseBtn.onclick = pauseTimer;
+            resumeBtn.onclick = resumeTimer;
+            resetBtn.onclick = resetTimer;
+            hideShowBtn.onclick = toggleTimerDisplay;
+        }
+
+        function updateButtonVisibility() {
+            const timerIsRunningOrPaused = timerInterval !== null;
+
+            timerButtonEl.style.display = timerIsRunningOrPaused ? 'none' : 'inline-block';
+            
+            pauseBtn.style.display = timerIsRunningOrPaused && !isPaused && isTimerVisible ? 'inline-block' : 'none';
+            resumeBtn.style.display = timerIsRunningOrPaused && isPaused && isTimerVisible ? 'inline-block' : 'none';
+            resetBtn.style.display = timerIsRunningOrPaused ? 'inline-block' : 'none';
+            
+            hideShowBtn.style.display = timerIsRunningOrPaused ? 'inline-block' : 'none';
+            if (timerIsRunningOrPaused) {
+                hideShowBtn.textContent = isTimerVisible ? translations[language]['Ocultar Temporizador'] : translations[language]['Mostrar Temporizador'];
+            }
+
+            timerContainerEl.style.display = timerIsRunningOrPaused && isTimerVisible ? 'block' : 'none';
+        }
+
+        function startTimer(minutes) {
+            if (timerInterval) clearInterval(timerInterval);
+
+            initialDurationMinutes = minutes;
+            totalSeconds = minutes * 60;
+            isPaused = false;
+            isTimerVisible = true; 
+
+            updateTimerDisplay();
+            
+            timerInterval = setInterval(() => {
+                if (!isPaused) {
+                    totalSeconds--;
+                    updateTimerDisplay();
+                    if (totalSeconds <= 0) {
+                        clearInterval(timerInterval);
+                        timerInterval = null;
+                        alert(translations[language]['¡Tiempo completado!']);
+                        // Reset to initial state after completion
+                        totalSeconds = initialDurationMinutes * 60; 
+                        updateButtonVisibility(); 
+                    }
+                }
+            }, 1000);
+            updateButtonVisibility();
+        }
+
+        function pauseTimer() {
+            isPaused = true;
+            updateButtonVisibility();
+        }
+
+        function resumeTimer() {
+            isPaused = false;
+            updateButtonVisibility();
+        }
+
+        function resetTimer() {
+            if (timerInterval) clearInterval(timerInterval);
+            timerInterval = null;
+            totalSeconds = 0; // Or initialDurationMinutes * 60 to reset to original time
+            isPaused = false;
+            isTimerVisible = false; // Hide timer display on reset
+            updateTimerDisplay(); // Show 00:00 or initial time
+            updateButtonVisibility();
+        }
+
+        function toggleTimerDisplay() {
+            isTimerVisible = !isTimerVisible;
+            updateButtonVisibility();
+        }
+        
+        function updateTimerDisplay() {
+            const minutes = Math.floor(totalSeconds / 60);
+            const seconds = totalSeconds % 60;
+            timerDisplayEl.textContent = 
+                `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        function toggleLanguage() {
+            language = language === 'es' ? 'en' : 'es';
+            updateAllText();
+        }
+        
+        function updateAllText() {
+            languageSwitchBtn.textContent = translations[language]['TranslateButtonText'];
+            subtitleEl.textContent = translations[language]['Un postre clásico español'];
+            recipeImageOverlayH2El.textContent = translations[language]['Flan Casero'];
+            
+            ingredientsTitleEl.textContent = translations[language]['Ingredientes'];
+            ing1El.textContent = translations[language]['4 huevos'];
+            ing2El.textContent = translations[language]['1 lata (397g) de leche condensada'];
+            ing3El.textContent = translations[language]['500 ml de leche entera'];
+            ing4El.textContent = translations[language]['1 cucharadita de esencia de vainilla'];
+            ing5El.textContent = translations[language]['1 taza de azúcar (para el caramelo)'];
+            ing6El.textContent = translations[language]['2 cucharadas de agua'];
+            
+            instructionsTitleEl.textContent = translations[language]['Instrucciones'];
+            step1El.textContent = translations[language]['Precalienta el horno a 180°C.'];
+            step2El.textContent = translations[language]['Para hacer el caramelo, pon el azúcar y el agua en una cacerola pequeña. Cocina a fuego medio, sin remover, hasta que se forme un caramelo dorado.'];
+            step3El.textContent = translations[language]['Vierte el caramelo caliente en un molde para flan. Gira el molde para cubrir el fondo uniformemente. Deja que el caramelo se enfríe.'];
+            step4El.textContent = translations[language]['En un tazón grande, bate los huevos. Añade la leche condensada, la leche entera y la vainilla. Mezcla bien.'];
+            step5El.textContent = translations[language]['Cuela la mezcla y viértela en el molde con caramelo.'];
+            step6El.textContent = translations[language]['Coloca el molde en un baño María (una bandeja más grande con agua caliente).'];
+            step7El.textContent = translations[language]['Hornea por 45-50 minutos, o hasta que al insertar un cuchillo en el centro salga limpio.'];
+            step8El.textContent = translations[language]['Retira del horno y deja enfriar a temperatura ambiente.'];
+            step9El.textContent = translations[language]['Refrigera por al menos 4 horas o toda la noche.'];
+            step10El.textContent = translations[language]['Para servir, pasa un cuchillo alrededor del borde del flan y voltéalo en un plato.'];
+            
+            tipTitleEl.textContent = translations[language]['Consejo:'];
+            tipTextEl.textContent = translations[language]['El flan debe temblar ligeramente en el centro cuando está listo. ¡No lo cocines demasiado!'];
+            
+            timerButtonEl.textContent = translations[language]['Iniciar Temporizador 45 min'].replace('45 min', `${initialDurationMinutes || 45} min`);
+            pauseBtn.textContent = translations[language]['Pausar'];
+            resumeBtn.textContent = translations[language]['Reanudar'];
+            resetBtn.textContent = translations[language]['Reiniciar'];
+            // hideShowBtn text is updated by updateButtonVisibility, which is called after language change
+
+            timerHeadingEl.textContent = translations[language]['Temporizador'];
+            footerTextEl.textContent = translations[language]['© 2025 Recetas Españolas - Creado para estudiantes de español'];
+
+            // This ensures button texts are correct after language switch
+            updateButtonVisibility(); 
+        }
+    </script>
+</body>
+</html>
