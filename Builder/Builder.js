@@ -466,7 +466,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <header>
             <h1>${data.recipeTitle}</h1>
             <div class="subtitle" data-translate-key="RecipeSubtitle">${data.subtitleDefault}</div>
-            ${data.addTranslation ? `<button class="language-switch" onclick="toggleLanguage()" data-translate-key="TranslateButtonText">${data.translateButtonDefault}</button>` : ''}
+            ${data.addTranslation ? `<button class="language-switch" data-translate-key="TranslateButtonText">${data.translateButtonDefault}</button>` : ''}
         </header>
 
         <div class="recipe-image-container">
